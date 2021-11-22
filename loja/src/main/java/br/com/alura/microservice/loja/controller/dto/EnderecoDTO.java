@@ -1,8 +1,10 @@
 package br.com.alura.microservice.loja.controller.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class EnderecoDTO {
 	private String rua, estado;
 	private Integer numero;

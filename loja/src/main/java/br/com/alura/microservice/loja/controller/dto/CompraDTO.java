@@ -1,10 +1,12 @@
 package br.com.alura.microservice.loja.controller.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class CompraDTO {
 	private List<ItemCompraDTO> itens;
 	private EnderecoDTO endereco;
