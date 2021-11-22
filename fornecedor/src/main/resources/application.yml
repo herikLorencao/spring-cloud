@@ -1,16 +1,5 @@
 server:
   port: 8081
-spring:
-  application:
-    name: 'fornecedor'
-  datasource:
-    url: jdbc:postgresql://localhost:5432/fornecedor
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
 eureka:
   client:
     register-with-eureka: true
