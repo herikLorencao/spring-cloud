@@ -1,4 +1,4 @@
-package br.com.alura.microservice.fornecedor.entity;
+package br.com.alura.microservice.fornecedor.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

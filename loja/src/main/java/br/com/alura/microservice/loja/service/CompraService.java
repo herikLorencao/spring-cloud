@@ -1,28 +1,26 @@
 package br.com.alura.microservice.loja.service;
 
+import br.com.alura.microservice.loja.client.FornecedorClient;
 import br.com.alura.microservice.loja.controller.dto.CompraDTO;
-import br.com.alura.microservice.loja.controller.dto.InfoFornecedorDTO;
+import br.com.alura.microservice.loja.model.Compra;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CompraService {
 
 	@Autowired
-	private RestTemplate client;
+	private FornecedorClient fornecedorClient;
 
-	@Autowired
-	private DiscoveryClient eurekaClient;
+	public Compra realizaCompra( CompraDTO compra ) {
+		var infoFornecedor = fornecedorClient.getInfoPorEstado( compra.getEndereco().getEstado() );
+		var pedido = fornecedorClient.realizaPedido(compra.getItens());
 
-	public void realizaCompra( CompraDTO compra ) {
-		var exchange = client.exchange( "http://fornecedor/info/" + compra.getEndereco().getEstado(), HttpMethod.GET, null, InfoFornecedorDTO.class );
+		var compraSalva = new Compra();
+		compraSalva.setPedidoId( pedido.getId() );
+		compraSalva.setTempoDePreparo( pedido.getTempoDePreparo() );
+		compraSalva.setEnderecoDestino( compra.getEndereco().toString() );
 
-		eurekaClient.getInstances( "fornecedor" ).stream()
-				.forEach( endereco -> System.out.println( endereco.getHost() + ":" + endereco.getPort() ) );
-
-		System.out.println( exchange.getBody().getEndereco() );
+		return compraSalva;
 	}
 }
