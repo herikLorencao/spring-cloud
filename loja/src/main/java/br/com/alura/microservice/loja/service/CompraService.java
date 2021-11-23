@@ -3,17 +3,22 @@ package br.com.alura.microservice.loja.service;
 import br.com.alura.microservice.loja.client.FornecedorClient;
 import br.com.alura.microservice.loja.controller.dto.CompraDTO;
 import br.com.alura.microservice.loja.model.Compra;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompraService {
+	private static final Logger logger = LoggerFactory.getLogger( CompraService.class );
 
 	@Autowired
 	private FornecedorClient fornecedorClient;
 
 	public Compra realizaCompra( CompraDTO compra ) {
+		logger.info( "Realizando busca do fornecedor no estado " + compra.getEndereco().getEstado() );
 		var infoFornecedor = fornecedorClient.getInfoPorEstado( compra.getEndereco().getEstado() );
+		logger.info( "Realizando processo de compra" );
 		var pedido = fornecedorClient.realizaPedido(compra.getItens());
 
 		var compraSalva = new Compra();
