@@ -27,11 +27,10 @@ public class LojaApplication {
 	@Bean
 	public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-				.timeLimiterConfig( TimeLimiterConfig.custom().timeoutDuration( Duration.ofSeconds(4)).build())
-				.circuitBreakerConfig( CircuitBreakerConfig.ofDefaults())
+				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(2)).build())
+				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
 				.build());
 	}
-
 	public static void main( String[] args ) {
 		SpringApplication.run( LojaApplication.class, args );
 	}
