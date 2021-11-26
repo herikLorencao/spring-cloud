@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: auth-server
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:10000/auth/realms/master
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 4968
